@@ -117,12 +117,14 @@
   }
 
   /* ---------- nav ---------- */
-  header{
+  .site-topbar{
     position:sticky;
     top:0;
+    z-index:10;
+  }
+  header{
     background:var(--ink);
     border-bottom:1px solid var(--line);
-    z-index:10;
   }
   .nav{
     display:flex;
@@ -315,56 +317,62 @@
   }
   .btn-ghost:hover{ border-color:var(--reactive); color:var(--reactive); }
 
-  /* reusable bracket-corner "specimen" frame */
-  .bracketed{ position:relative; }
-  .bracketed::before, .bracketed::after{
-    content:'';
-    position:absolute;
-    width:22px; height:22px;
-    border:1px solid var(--reactive);
-    opacity:.6;
-    z-index:2;
+
+  /* ---------- tickets grid ---------- */
+  .tickets-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
   }
-  .bracketed::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
-  .bracketed::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+  @media (max-width:760px){
+    .tickets-grid{ grid-template-columns:1fr; }
+  }
 
   /* ---------- ticket ---------- */
   .ticket{
-    --stub-w:150px;
+    --logo-w:clamp(92px,18vw,132px);
+    --stub-w:118px;
+    --notch-r:11px;
     position:relative;
     display:grid;
-    grid-template-columns:1fr var(--stub-w);
+    grid-template-columns:var(--logo-w) 1fr var(--stub-w);
     border-radius:18px;
-    overflow:hidden;
     background:var(--ink);
     border:1px solid var(--line);
     text-decoration:none;
     color:inherit;
+    mask-image:
+      radial-gradient(circle var(--notch-r) at calc(100% - var(--stub-w)) 0, transparent 99%, #000 100%),
+      radial-gradient(circle var(--notch-r) at calc(100% - var(--stub-w)) 100%, transparent 99%, #000 100%),
+      linear-gradient(#000,#000);
+    mask-composite:intersect,intersect;
+    -webkit-mask-image:
+      radial-gradient(circle var(--notch-r) at calc(100% - var(--stub-w)) 0, transparent 99%, #000 100%),
+      radial-gradient(circle var(--notch-r) at calc(100% - var(--stub-w)) 100%, transparent 99%, #000 100%),
+      linear-gradient(#000,#000);
+    -webkit-mask-composite:source-in,source-in;
   }
-  .ticket::before, .ticket::after{
-    content:'';
-    position:absolute;
-    width:26px; height:26px;
-    border-radius:50%;
-    background:var(--ink-2);
-    left:calc(100% - var(--stub-w) - 13px);
-    z-index:2;
-  }
-  .ticket::before{ top:-13px; }
-  .ticket::after{ bottom:-13px; }
-  .ticket-main{
+  .ticket-logo-panel{
     position:relative;
-    padding:clamp(24px,4vw,36px);
+    background:#000;
     display:flex;
     align-items:center;
-    gap:22px;
+    justify-content:center;
+    padding:10px;
+    border-top-left-radius:18px;
+    border-bottom-left-radius:18px;
+    overflow:hidden;
   }
   .ticket-venue-logo{
-    width:clamp(56px,9vw,84px);
-    height:clamp(56px,9vw,84px);
+    width:100%;
+    height:100%;
     object-fit:contain;
-    flex-shrink:0;
-    border-radius:10px;
+  }
+  .ticket-main{
+    position:relative;
+    padding:clamp(20px,3.5vw,32px);
+    display:flex;
+    align-items:center;
   }
   .ticket-main-text{
     display:flex;
@@ -423,42 +431,27 @@
     background:repeating-linear-gradient(90deg, var(--muted) 0 2px, transparent 2px 5px);
     opacity:.45;
   }
+  .ticket-soon{ opacity:.7; }
+  .ticket-soon:hover, .ticket-soon:focus-visible{ opacity:1; }
+  .ticket-soon .ticket-logo-panel{
+    background:transparent;
+    border:1px dashed var(--line);
+    border-top-right-radius:0;
+    border-bottom-right-radius:0;
+  }
+  .ticket-soon-mark{
+    font-family:'VTF Redzone Classic',sans-serif;
+    font-size:clamp(36px,7vw,52px);
+    color:var(--muted);
+  }
+  .ticket-soon .ticket-stub-logo{ filter:none; opacity:.4; }
   @media (max-width:560px){
-    .ticket{ --stub-w:110px; }
-    .ticket-main{ gap:14px; }
-    .ticket-venue-logo{ width:48px; height:48px; }
-    .ticket-stub-logo{ width:34px; }
+    .ticket{ --stub-w:90px; --logo-w:84px; }
+    .ticket-stub-logo{ width:30px; }
     .ticket-hover-btn{ font-size:13px; padding:10px 18px; }
   }
 
   /* ---------- next event ---------- */
-  .event-card{
-    border:1px solid var(--line);
-    border-radius:18px;
-    background:linear-gradient(160deg,var(--ink-2),rgba(21,10,32,.4));
-    padding:clamp(28px,5vw,52px);
-    display:grid;
-    grid-template-columns:auto 1fr auto;
-    gap:32px;
-    align-items:center;
-  }
-  @media (max-width:760px){
-    .event-card{ grid-template-columns:1fr; text-align:left; }
-  }
-  .event-date{
-    font-family:'VTF Redzone Classic',sans-serif;
-    font-weight:400;
-    line-height:.9;
-    text-align:center;
-    padding-right:32px;
-    border-right:1px solid var(--line);
-  }
-  .event-date .d{ font-size:52px; color:var(--reactive); }
-  .event-date .m{ display:block; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:.18em; color:var(--muted); margin-top:6px; }
-  @media (max-width:760px){
-    .event-date{ border-right:none; border-bottom:1px solid var(--line); padding-right:0; padding-bottom:18px; text-align:left; }
-  }
-  .event-body h3{ font-size:clamp(24px,4vw,32px); margin-bottom:10px; }
   .event-meta{
     display:flex;
     flex-wrap:wrap;
@@ -486,6 +479,11 @@
   }
   .section-head h2{
     font-size:clamp(30px,5vw,46px);
+    margin-top:16px;
+    font-weight:800;
+  }
+  .section-head h3{
+    font-size:clamp(24px,3.5vw,32px);
     margin-top:16px;
     font-weight:800;
   }
@@ -547,6 +545,37 @@
   .flask-photo-wrap .ingredient:hover .tick-line{ background:var(--reactive); width:24px; }
   .flask-photo-wrap .ingredient:hover .tick-label{ color:var(--reactive); opacity:1; }
 
+  /* ---------- flask bubbles ---------- */
+  .flask-bubbles{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    clip-path:polygon(38% 40%, 60% 40%, 74% 82%, 68% 87%, 50% 88%, 32% 87%, 26% 82%);
+  }
+  .flask-bubbles .bubble{
+    position:absolute;
+    left:var(--x);
+    bottom:-10%;
+    width:var(--size);
+    height:var(--size);
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.95), rgba(255,200,245,.35) 45%, rgba(255,255,255,0) 72%);
+    box-shadow:0 0 6px rgba(255,255,255,.35);
+    opacity:0;
+    animation:bubble-rise var(--dur) linear var(--delay) infinite;
+  }
+  @keyframes bubble-rise{
+    0%{ bottom:-10%; opacity:0; transform:translateX(0); }
+    10%{ opacity:.85; }
+    50%{ transform:translateX(var(--drift)); }
+    90%{ opacity:.55; }
+    100%{ bottom:105%; opacity:0; transform:translateX(calc(var(--drift) * -1)); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .flask-bubbles .bubble{ animation:none; opacity:0; }
+  }
+
   /* ---------- elements grid ---------- */
   .elements{
     display:grid;
@@ -591,6 +620,31 @@
     color:var(--muted);
   }
 
+  /* ---------- formulitas ---------- */
+  .formulitas-grid{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:40px;
+    align-items:center;
+    margin-top:64px;
+  }
+  @media (max-width:820px){
+    .formulitas-grid{ grid-template-columns:1fr; justify-items:center; text-align:center; }
+  }
+  .formulitas-photos{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:0;
+    width:min(440px,90vw);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .formulitas-photos img{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+
   /* ---------- gallery / bitacora ---------- */
   .bitacora{
     display:grid;
@@ -607,8 +661,24 @@
     display:flex;
     align-items:flex-end;
     padding:14px;
+    text-decoration:none;
+    color:inherit;
+    cursor:pointer;
+    transition:transform .2s ease, border-color .2s ease;
   }
-  .vial span{
+  .vial:hover, .vial:focus-visible{
+    transform:translateY(-3px);
+    border-color:var(--accent);
+  }
+  .vial-photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .vial-caption{
     position:relative;
     font-family:'Space Mono',monospace;
     font-size:11px;
@@ -616,6 +686,18 @@
     color:rgba(255,255,255,.85);
     text-transform:uppercase;
   }
+  .vial-hover{
+    position:absolute;
+    inset:0;
+    background:rgba(11,6,17,.82);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    transition:opacity .2s ease;
+    z-index:2;
+  }
+  .vial:hover .vial-hover, .vial:focus-visible .vial-hover{ opacity:1; }
   .vial::before{
     content:'';
     position:absolute; inset:0;
@@ -629,26 +711,58 @@
     position:absolute; inset:0;
     background:linear-gradient(180deg,rgba(11,6,17,0) 40%,rgba(11,6,17,.85) 100%);
   }
-  .gallery-note{
-    margin-top:16px;
-    font-size:13px;
-    color:var(--muted);
-  }
 
-  /* ---------- location ---------- */
-  .location{
+  /* ---------- contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:start;
+  }
+  @media (max-width:820px){
+    .contact-grid{ grid-template-columns:1fr; }
+  }
+  .contact-grid .section-head p strong{ color:var(--paper); }
+  .contact-card{
     border:1px solid var(--line);
     border-radius:18px;
-    padding:clamp(28px,5vw,48px);
-    display:grid;
-    grid-template-columns:1fr auto;
-    gap:24px;
-    align-items:center;
+    padding:clamp(24px,4vw,32px);
     background:rgba(255,255,255,.02);
   }
-  @media (max-width:700px){ .location{ grid-template-columns:1fr; } }
-  .location h3{ font-size:clamp(22px,3.5vw,28px); }
-  .location p{ color:var(--muted); margin-top:10px; font-size:15px; }
+  .contact-card h3{
+    font-size:19px;
+    margin-bottom:18px;
+  }
+  .contact-form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .contact-form input{
+    width:100%;
+    padding:13px 15px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.03);
+    color:var(--paper);
+    font-family:inherit;
+    font-size:14px;
+  }
+  .contact-form input::placeholder{ color:var(--muted); }
+  .contact-form input:focus{ outline:none; border-color:var(--reactive); }
+  .contact-form button.btn{
+    border:none;
+    cursor:pointer;
+    font-family:inherit;
+    justify-content:center;
+    margin-top:4px;
+  }
+  .form-note{
+    margin-top:14px;
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+  }
 
   /* ---------- footer ---------- */
   footer{
@@ -688,52 +802,54 @@
   <div class="blob c"></div>
 </div>
 
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-    <span>La fórmula del reggaetón</span>
-  </div>
-</div>
-
-<header>
-  <div class="wrap nav">
-    <a class="brand" href="#top">
-      <span class="brand-mark"><img src="img/logo-mark.png?v=4" alt="La Fórmula"></span>
-      <span>La Fórmula</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#eventos">Eventos</a></li>
-      <li><a href="#tickets">Tickets</a></li>
-      <li><a href="#galeria">Galería</a></li>
-      <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
-    </ul>
-    <div class="nav-social">
-      <a href="https://www.instagram.com/la.formula.oficial/" target="_blank" rel="noopener" aria-label="Instagram de La Fórmula">
-        <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.43-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.14 0-3.5.01-4.73.07-1.02.05-1.58.22-1.95.36-.49.19-.84.42-1.2.79-.37.36-.6.71-.79 1.2-.14.37-.31.93-.36 1.95-.06 1.23-.07 1.59-.07 4.73s.01 3.5.07 4.73c.05 1.02.22 1.58.36 1.95.19.49.42.84.79 1.2.36.37.71.6 1.2.79.37.14.93.31 1.95.36 1.23.06 1.59.07 4.73.07s3.5-.01 4.73-.07c1.02-.05 1.58-.22 1.95-.36.49-.19.84-.42 1.2-.79.37-.36.6-.71.79-1.2.14-.37.31-.93.36-1.95.06-1.23.07-1.59.07-4.73s-.01-3.5-.07-4.73c-.05-1.02-.22-1.58-.36-1.95-.19-.49-.42-.84-.79-1.2-.36-.37-.71-.6-1.2-.79-.37-.14-.93-.31-1.95-.36C15.5 4.01 15.14 4 12 4zm0 3.05a4.95 4.95 0 1 1 0 9.9 4.95 4.95 0 0 1 0-9.9zm0 1.8a3.15 3.15 0 1 0 0 6.3 3.15 3.15 0 0 0 0-6.3zm5.15-2.02a1.16 1.16 0 1 1-2.32 0 1.16 1.16 0 0 1 2.32 0z"/></svg>
-      </a>
-      <a href="https://open.spotify.com/playlist/4HknHQyTJ9J1VlRIwllGCG?si=XEzO6uyETr2Ck8Ek3t4eIA" target="_blank" rel="noopener" aria-label="Playlist de Spotify de La Fórmula">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 14.4a.62.62 0 0 1-.86.2c-2.36-1.44-5.33-1.77-8.84-.97a.63.63 0 1 1-.28-1.23c3.84-.88 7.13-.5 9.78 1.13.3.18.39.57.2.87zm1.22-2.72a.78.78 0 0 1-1.07.26c-2.7-1.66-6.82-2.14-10.02-1.17a.78.78 0 1 1-.45-1.5c3.65-1.1 8.19-.57 11.29 1.33.37.23.48.72.25 1.08zm.1-2.83c-3.24-1.92-8.6-2.1-11.7-1.16a.94.94 0 1 1-.54-1.8c3.56-1.08 9.48-.87 13.22 1.34a.94.94 0 0 1-.98 1.62z"/></svg>
-      </a>
-      <a href="https://www.tiktok.com/@laformula_okk" target="_blank" rel="noopener" aria-label="TikTok de La Fórmula">
-        <svg viewBox="0 0 24 24"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg>
-      </a>
+<div class="site-topbar">
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
+      <span>La fórmula del reggaetón</span>
     </div>
   </div>
-</header>
+
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#top">
+        <span class="brand-mark"><img src="img/logo-mark.png?v=4" alt="La Fórmula"></span>
+        <span>La Fórmula</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
+        <li><a href="#galeria">Galería</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <div class="nav-social">
+        <a href="https://www.instagram.com/la.formula.oficial/" target="_blank" rel="noopener" aria-label="Instagram de La Fórmula">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.43.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.43.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.43-.36-1.06-.41-2.23C2.21 15.58 2.2 15.2 2.2 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.43-.16 1.06-.36 2.23-.41C8.42 2.21 8.8 2.2 12 2.2zm0 1.8c-3.14 0-3.5.01-4.73.07-1.02.05-1.58.22-1.95.36-.49.19-.84.42-1.2.79-.37.36-.6.71-.79 1.2-.14.37-.31.93-.36 1.95-.06 1.23-.07 1.59-.07 4.73s.01 3.5.07 4.73c.05 1.02.22 1.58.36 1.95.19.49.42.84.79 1.2.36.37.71.6 1.2.79.37.14.93.31 1.95.36 1.23.06 1.59.07 4.73.07s3.5-.01 4.73-.07c1.02-.05 1.58-.22 1.95-.36.49-.19.84-.42 1.2-.79.37-.36.6-.71.79-1.2.14-.37.31-.93.36-1.95.06-1.23.07-1.59.07-4.73s-.01-3.5-.07-4.73c-.05-1.02-.22-1.58-.36-1.95-.19-.49-.42-.84-.79-1.2-.36-.37-.71-.6-1.2-.79-.37-.14-.93-.31-1.95-.36C15.5 4.01 15.14 4 12 4zm0 3.05a4.95 4.95 0 1 1 0 9.9 4.95 4.95 0 0 1 0-9.9zm0 1.8a3.15 3.15 0 1 0 0 6.3 3.15 3.15 0 0 0 0-6.3zm5.15-2.02a1.16 1.16 0 1 1-2.32 0 1.16 1.16 0 0 1 2.32 0z"/></svg>
+        </a>
+        <a href="https://open.spotify.com/playlist/4HknHQyTJ9J1VlRIwllGCG?si=XEzO6uyETr2Ck8Ek3t4eIA" target="_blank" rel="noopener" aria-label="Playlist de Spotify de La Fórmula">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.59 14.4a.62.62 0 0 1-.86.2c-2.36-1.44-5.33-1.77-8.84-.97a.63.63 0 1 1-.28-1.23c3.84-.88 7.13-.5 9.78 1.13.3.18.39.57.2.87zm1.22-2.72a.78.78 0 0 1-1.07.26c-2.7-1.66-6.82-2.14-10.02-1.17a.78.78 0 1 1-.45-1.5c3.65-1.1 8.19-.57 11.29 1.33.37.23.48.72.25 1.08zm.1-2.83c-3.24-1.92-8.6-2.1-11.7-1.16a.94.94 0 1 1-.54-1.8c3.56-1.08 9.48-.87 13.22 1.34a.94.94 0 0 1-.98 1.62z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@laformula_okk" target="_blank" rel="noopener" aria-label="TikTok de La Fórmula">
+          <svg viewBox="0 0 24 24"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+</div>
 
 <main id="top">
 
@@ -755,12 +871,15 @@
     <div class="wrap">
       <div class="section-head">
         <span class="label">Eventos</span>
-        <h2>La próxima reacción</h2>
+        <h2>Próximos eventos</h2>
         <p>Una fecha por vez, siempre confirmada primero por Instagram.</p>
       </div>
+      <div class="tickets-grid">
       <a class="ticket" href="https://www.passline.com/eventos/la-formula-x-hache-club-199/la-formula-847264" target="_blank" rel="noopener">
-        <div class="ticket-main">
+        <div class="ticket-logo-panel">
           <img class="ticket-venue-logo" src="img/hache-logo.png" alt="Hache Club">
+        </div>
+        <div class="ticket-main">
           <div class="ticket-main-text">
             <span class="label" style="margin-bottom:4px;">Próxima reacción</span>
             <h3>La Fórmula x Hache</h3>
@@ -779,30 +898,28 @@
           <div class="ticket-barcode" aria-hidden="true"></div>
         </div>
       </a>
-    </div>
-  </section>
-
-  <section id="tickets">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="label">Tickets</span>
-        <h2>Cómo conseguir tu entrada</h2>
-        <p>El ingreso a La Fórmula es libre y gratuito. Igual conviene reservar tu lugar antes: cuando se llena la lista, se llena la puerta.</p>
-      </div>
-      <div class="event-card bracketed">
-        <div class="event-date">
-          <span class="d mono" style="font-size:40px;">$0</span>
-          <span class="m mono">INGRESO FREE</span>
+      <a class="ticket ticket-soon" href="https://www.instagram.com/la.formula.oficial/" target="_blank" rel="noopener">
+        <div class="ticket-logo-panel">
+          <span class="ticket-soon-mark">?</span>
         </div>
-        <div class="event-body">
-          <span class="label" style="margin-bottom:14px;">Passline</span>
-          <h3>Reservá tu entrada online</h3>
-          <div class="event-meta">
-            <span>🎟️ Sin costo, cupo limitado</span>
-            <span>📲 Confirmación al instante</span>
+        <div class="ticket-main">
+          <div class="ticket-main-text">
+            <span class="label" style="margin-bottom:4px;">Próximamente</span>
+            <h3>Anunciamos pronto</h3>
+            <div class="event-meta">
+              <span>📲 Seguinos para enterarte primero</span>
+            </div>
+          </div>
+          <div class="ticket-hover">
+            <span class="ticket-hover-btn">Seguir en Instagram</span>
           </div>
         </div>
-        <a class="btn btn-primary" href="https://www.passline.com/eventos/la-formula-x-hache-club-199/la-formula-847264" target="_blank" rel="noopener">Ir a Passline</a>
+        <div class="ticket-stub">
+          <img class="ticket-stub-logo" src="img/logo-mark.png?v=4" alt="La Fórmula">
+          <span class="m mono">PRONTO</span>
+          <div class="ticket-barcode" aria-hidden="true"></div>
+        </div>
+      </a>
       </div>
     </div>
   </section>
@@ -817,7 +934,21 @@
         </div>
         <div class="flask-jar-wrap">
           <div class="flask-photo-wrap">
-            <img class="flask-photo" src="img/flask-photo.png" alt="Frasco de laboratorio lleno de líquido magenta con burbujas">
+            <img class="flask-photo" src="img/flask-photo.png?v=2" alt="Frasco de laboratorio lleno de líquido magenta con burbujas">
+            <div class="flask-bubbles" aria-hidden="true">
+              <span class="bubble" style="--x:34%; --size:7px;  --dur:4.2s; --delay:0s;   --drift:5px;"></span>
+              <span class="bubble" style="--x:42%; --size:5px;  --dur:3.4s; --delay:.6s;  --drift:-6px;"></span>
+              <span class="bubble" style="--x:50%; --size:9px;  --dur:5.1s; --delay:1.1s; --drift:7px;"></span>
+              <span class="bubble" style="--x:58%; --size:6px;  --dur:3.9s; --delay:.3s;  --drift:-4px;"></span>
+              <span class="bubble" style="--x:64%; --size:8px;  --dur:4.7s; --delay:1.8s; --drift:6px;"></span>
+              <span class="bubble" style="--x:38%; --size:4px;  --dur:3.1s; --delay:2.2s; --drift:-5px;"></span>
+              <span class="bubble" style="--x:46%; --size:6px;  --dur:4.4s; --delay:2.8s; --drift:4px;"></span>
+              <span class="bubble" style="--x:55%; --size:5px;  --dur:3.6s; --delay:1.5s; --drift:-6px;"></span>
+              <span class="bubble" style="--x:60%; --size:4px;  --dur:5.4s; --delay:.9s;  --drift:5px;"></span>
+              <span class="bubble" style="--x:48%; --size:10px; --dur:5.8s; --delay:3.4s; --drift:-7px;"></span>
+              <span class="bubble" style="--x:40%; --size:6px;  --dur:4s;   --delay:3.9s; --drift:6px;"></span>
+              <span class="bubble" style="--x:52%; --size:5px;  --dur:3.3s; --delay:4.4s; --drift:-4px;"></span>
+            </div>
             <div class="ingredient" style="top:42%; left:62%;">
               <span class="tick-line"></span><span class="tick-label">Diversión</span>
             </div>
@@ -875,6 +1006,19 @@
           <div class="element-desc">El sistema de sonido está pensado para sentirlo en el pecho.</div>
         </div>
       </div>
+      <div class="formulitas-grid">
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="label">Ritual de la casa</span>
+          <h3>Las formulitas</h3>
+          <p>En un momento de la noche repartimos formulitas —shots de laboratorio— entre el público.</p>
+        </div>
+        <div class="formulitas-photos">
+          <img src="img/formulitas/formulita-1.jpg" alt="Formulita servida directo a la boca en pleno baile">
+          <img src="img/formulitas/formulita-2.jpg" alt="Ayudantes de La Fórmula con guardapolvo repartiendo formulitas">
+          <img src="img/formulitas/formulita-3.jpg" alt="Chicas brindando con sus formulitas en mano">
+          <img src="img/formulitas/formulita-4.jpg" alt="Manos sosteniendo tubos de ensayo con formulitas de colores">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -886,24 +1030,48 @@
         <p>Cada fiesta queda anotada. Estas son las muestras de las últimas reacciones.</p>
       </div>
       <div class="bitacora">
-        <div class="vial v1"><span>Muestra 01 — apertura</span></div>
-        <div class="vial v2"><span>Muestra 02 — pista a full</span></div>
-        <div class="vial v3"><span>Muestra 03 — la previa</span></div>
-        <div class="vial v4"><span>Muestra 04 — cierre</span></div>
+        <a class="vial v1" href="https://drive.google.com/drive/folders/1FcYlOYHB8ySfh0GavSLsnJwHE2nBCPcM" target="_blank" rel="noopener">
+          <img class="vial-photo" src="img/galeria/gal-1206.jpg" alt="Fotos de La Fórmula del 12 de junio">
+          <span class="vial-caption">12 jun</span>
+          <div class="vial-hover"><span class="ticket-hover-btn">Ver álbum</span></div>
+        </a>
+        <a class="vial v2" href="https://drive.google.com/drive/folders/1JEG5vhCmlwewZmMOVg56UwAEx0-Z_2Z-" target="_blank" rel="noopener">
+          <img class="vial-photo" src="img/galeria/gal-0307.jpg" alt="Fotos de La Fórmula del 3 de julio">
+          <span class="vial-caption">03 jul</span>
+          <div class="vial-hover"><span class="ticket-hover-btn">Ver álbum</span></div>
+        </a>
+        <a class="vial v3" href="https://drive.google.com/drive/folders/1e5mDDkGYTDPDUTW-kgQ3xlJYByTG--hf" target="_blank" rel="noopener">
+          <img class="vial-photo" src="img/galeria/gal-0708.jpg" alt="Fotos de La Fórmula del 22 de agosto">
+          <span class="vial-caption">22 ago</span>
+          <div class="vial-hover"><span class="ticket-hover-btn">Ver álbum</span></div>
+        </a>
+        <a class="vial v4" href="https://drive.google.com/drive/folders/1Zh42Y90uyzvnJsW-4_jy7n5uBH37jlT_" target="_blank" rel="noopener">
+          <img class="vial-photo" src="img/galeria/gal-0409.jpg" alt="Fotos de La Fórmula del 4 de septiembre">
+          <span class="vial-caption">04 sep</span>
+          <div class="vial-hover"><span class="ticket-hover-btn">Ver álbum</span></div>
+        </a>
       </div>
-      <p class="gallery-note">* Espacio reservado para fotos reales de la fiesta — reemplazar estas muestras por el material del último evento.</p>
     </div>
   </section>
 
-  <section id="ubicacion">
+  <section id="contacto">
     <div class="wrap">
-      <div class="location">
-        <div>
-          <span class="label">Dónde reaccionamos</span>
-          <h3 style="margin-top:14px;">Hache Club — Buenos Aires</h3>
-          <p>La dirección exacta y el mapa se confirman por Instagram antes de cada fecha. Seguinos para no perderte la próxima.</p>
+      <div class="contact-grid">
+        <div class="section-head" style="margin-bottom:0;">
+          <span class="label">Contacto</span>
+          <h2>Contactanos</h2>
+          <p>Si querés ser la sede de La Fórmula, escribinos a <strong>hola@laformula.com</strong> o dejá tu información:</p>
         </div>
-        <a class="btn btn-ghost" href="https://www.google.com/maps/search/Hache+Club+Buenos+Aires" target="_blank" rel="noopener">Ver en el mapa</a>
+        <div class="contact-card">
+          <h3>Quiero ser sede de La Fórmula</h3>
+          <form class="contact-form" action="mailto:hola@laformula.com" method="POST" enctype="text/plain">
+            <input type="text" name="Lugar" placeholder="Nombre del lugar" required>
+            <input type="text" name="Ciudad" placeholder="Ciudad" required>
+            <input type="email" name="Email" placeholder="Email" required>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </form>
+          <p class="form-note">Te contactamos nosotros a la brevedad.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -923,6 +1091,7 @@
         <li><a href="https://www.tiktok.com/@laformula_okk" target="_blank" rel="noopener">TikTok</a></li>
         <li><a href="https://www.passline.com/eventos/la-formula-x-hache-club-199/la-formula-847264" target="_blank" rel="noopener">Entradas</a></li>
         <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
       </ul>
     </div>
     <p class="fineprint">HECHO CON QUÍMICA Y BUENA ONDA EN BUENOS AIRES · LA FÓRMULA © 2026 · DM ABIERTO EN INSTAGRAM PARA CONSULTAS</p>
