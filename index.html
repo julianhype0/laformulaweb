@@ -684,7 +684,6 @@
   @media (max-width:460px){
     .fc-xxl{
       font-size:clamp(26px,8.5vw,42px);
-      transform:translateY(-3px) scale(1.04) rotate(-3deg);
     }
   }
   .fc-xl{ font-size:clamp(27px,4.6vw,48px); }
@@ -700,10 +699,16 @@
     border-radius:16px;
     overflow:hidden;
   }
-  .formulitas-photos img{
+  .formulita-frame{
+    position:relative;
+    aspect-ratio:5/7;
+    overflow:hidden;
+  }
+  .formulita-frame img{
+    position:absolute;
+    inset:0;
     width:100%;
     height:100%;
-    aspect-ratio:5/7;
     object-fit:contain;
     display:block;
   }
@@ -1173,10 +1178,10 @@
           </div>
         </div>
         <div class="formulitas-photos">
-          <img src="img/formulitas/formulita-1.jpg" alt="Formulita servida directo a la boca en pleno baile">
-          <img src="img/formulitas/formulita-2.jpg" alt="Ayudantes de La Fórmula con guardapolvo repartiendo formulitas">
-          <img src="img/formulitas/formulita-3.jpg" alt="Chicas brindando con sus formulitas en mano">
-          <img src="img/formulitas/formulita-4.jpg" alt="Manos sosteniendo tubos de ensayo con formulitas de colores">
+          <div class="formulita-frame"><img src="img/formulitas/formulita-1.jpg" alt="Formulita servida directo a la boca en pleno baile"></div>
+          <div class="formulita-frame"><img src="img/formulitas/formulita-2.jpg" alt="Ayudantes de La Fórmula con guardapolvo repartiendo formulitas"></div>
+          <div class="formulita-frame"><img src="img/formulitas/formulita-3.jpg" alt="Chicas brindando con sus formulitas en mano"></div>
+          <div class="formulita-frame"><img src="img/formulitas/formulita-4.jpg" alt="Manos sosteniendo tubos de ensayo con formulitas de colores"></div>
         </div>
       </div>
     </div>
