@@ -681,6 +681,12 @@
     transform:translateY(-5px) scale(1.1) rotate(-3deg);
     text-shadow:0 0 14px rgba(255,95,224,.85), 0 0 32px rgba(239,43,214,.55);
   }
+  @media (max-width:460px){
+    .fc-xxl{
+      font-size:clamp(26px,8.5vw,42px);
+      transform:translateY(-3px) scale(1.04) rotate(-3deg);
+    }
+  }
   .fc-xl{ font-size:clamp(27px,4.6vw,48px); }
   .fc-lg{ font-size:clamp(22px,3.3vw,33px); }
   .fc-md{ font-size:clamp(16px,2.2vw,22px); }
@@ -698,7 +704,7 @@
     width:100%;
     height:100%;
     aspect-ratio:5/7;
-    object-fit:cover;
+    object-fit:contain;
     display:block;
   }
 
@@ -1214,11 +1220,11 @@
         <div class="section-head" style="margin-bottom:0;">
           <span class="label">Contacto</span>
           <h2>Contactanos</h2>
-          <p>Si querés ser la sede de La Fórmula, escribinos a <strong>hola@laformula.com</strong> o dejá tu información:</p>
+          <p>Si querés ser la sede de La Fórmula, escribinos a <strong>laformulafiesta@gmail.com</strong> o dejá tu información:</p>
         </div>
         <div class="contact-card">
           <h3>Quiero ser sede de La Fórmula</h3>
-          <form class="contact-form" action="mailto:hola@laformula.com" method="POST" enctype="text/plain">
+          <form class="contact-form" action="mailto:laformulafiesta@gmail.com" method="POST" enctype="text/plain">
             <input type="text" name="Lugar" placeholder="Nombre del lugar" required>
             <input type="text" name="Ciudad" placeholder="Ciudad" required>
             <input type="email" name="Email" placeholder="Email" required>
@@ -1262,7 +1268,7 @@
       <span class="label">Newsletter</span>
       <h3 id="newsletterTitle">Instrucciones de La Fórmula para superar el FOMO</h3>
       <p>Dejanos tu mail y recibís la próxima fecha antes que nadie, promos exclusivas y más 🧪🎉</p>
-      <form class="contact-form" action="mailto:hola@laformula.com" method="POST" enctype="text/plain">
+      <form class="contact-form" action="mailto:laformulafiesta@gmail.com" method="POST" enctype="text/plain">
         <input type="text" name="Nombre" placeholder="Nombre" required>
         <input type="email" name="Email" placeholder="Email" required>
         <input type="text" name="Ciudad" placeholder="Ciudad" required>
