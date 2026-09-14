@@ -10,7 +10,7 @@
 
   @font-face{
     font-family:'VTF Redzone Classic';
-    src:url('font/VTFRedzone-Classic.woff2') format('woff2'), url('font/VTFRedzone-Classic.woff') format('woff');
+    src:url('font/HighSpeed.ttf') format('truetype');
     font-weight:400;
     font-style:normal;
     font-display:swap;
@@ -27,7 +27,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; overflow-x:hidden;}
+  html{scroll-behavior:smooth;}
   body{
     margin:0;
     overflow-x:hidden;
@@ -103,7 +103,7 @@
     gap:16px;
     padding:9px 24px;
     font-family:'VTF Redzone Classic',system-ui,sans-serif;
-    font-size:15px;
+    font-size:14px;
     letter-spacing:.02em;
     text-transform:uppercase;
     color:#fff;
@@ -141,7 +141,7 @@
     text-decoration:none;
   }
   .brand-mark{
-    width:44px; height:47px;
+    width:44px;
     flex-shrink:0;
     display:flex;
     align-items:center;
@@ -155,7 +155,7 @@
     font-family:'VTF Redzone Classic',sans-serif;
     font-weight:400;
     text-transform:uppercase;
-    font-size:23px;
+    font-size:21px;
     letter-spacing:.03em;
     color:var(--paper);
   }
@@ -249,7 +249,7 @@
     text-align:center;
   }
   .hero-logo{
-    width:min(210px,42vw);
+    width:min(140px,26vw);
     filter:drop-shadow(0 0 22px rgba(239,43,214,.5)) drop-shadow(0 0 48px rgba(139,43,239,.4));
     margin-bottom:20px;
   }
@@ -258,7 +258,7 @@
     color:var(--paper);
   }
   .hero h1{
-    font-size:clamp(48px,9vw,108px);
+    font-size:clamp(44px,8.2vw,99px);
     line-height:.92;
     letter-spacing:.01em;
     color:var(--paper);
@@ -383,6 +383,9 @@
     gap:10px;
     min-width:0;
   }
+  .ticket-main-text h3{
+    font-size:17px;
+  }
   .ticket-hover{
     position:absolute;
     inset:0;
@@ -401,7 +404,7 @@
     border-radius:999px;
     font-family:'VTF Redzone Classic',sans-serif;
     letter-spacing:.03em;
-    font-size:15px;
+    font-size:14px;
     color:var(--paper);
     white-space:nowrap;
   }
@@ -444,7 +447,7 @@
   }
   .ticket-soon-mark{
     font-family:'VTF Redzone Classic',sans-serif;
-    font-size:clamp(36px,7vw,52px);
+    font-size:clamp(33px,6.4vw,48px);
     color:var(--muted);
   }
   .ticket-soon .ticket-stub-logo{ filter:none; opacity:.4; }
@@ -481,12 +484,12 @@
     margin-bottom:48px;
   }
   .section-head h2{
-    font-size:clamp(30px,5vw,46px);
+    font-size:clamp(27px,4.6vw,42px);
     margin-top:16px;
     font-weight:800;
   }
   .section-head h3{
-    font-size:clamp(24px,3.5vw,32px);
+    font-size:clamp(22px,3.2vw,29px);
     margin-top:16px;
     font-weight:800;
   }
@@ -605,7 +608,7 @@
   }
   .element-symbol{
     font-family:'VTF Redzone Classic',sans-serif;
-    font-size:40px;
+    font-size:37px;
     font-weight:400;
     color:var(--paper);
     margin-top:6px;
@@ -659,17 +662,29 @@
     text-transform:uppercase;
     line-height:.95;
     color:var(--paper);
+    display:inline-block;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), color .25s ease, text-shadow .3s ease;
+  }
+  .fc:hover{
+    transform:translateY(-5px) scale(1.1) rotate(-3deg);
+    color:var(--reactive);
+    text-shadow:0 0 14px rgba(255,95,224,.85), 0 0 32px rgba(239,43,214,.55);
   }
   .fc-mono{
     font-family:'Space Mono',monospace;
     text-transform:none;
     color:var(--muted);
   }
-  .fc-xxl{ font-size:clamp(46px,7.5vw,84px); color:var(--reactive); }
-  .fc-xl{ font-size:clamp(30px,5vw,52px); }
-  .fc-lg{ font-size:clamp(24px,3.6vw,36px); }
-  .fc-md{ font-size:clamp(17px,2.4vw,24px); }
-  .fc-sm{ font-size:clamp(13px,1.7vw,17px); }
+  .fc-xxl{
+    font-size:clamp(42px,6.9vw,77px);
+    color:var(--reactive);
+    transform:translateY(-5px) scale(1.1) rotate(-3deg);
+    text-shadow:0 0 14px rgba(255,95,224,.85), 0 0 32px rgba(239,43,214,.55);
+  }
+  .fc-xl{ font-size:clamp(27px,4.6vw,48px); }
+  .fc-lg{ font-size:clamp(22px,3.3vw,33px); }
+  .fc-md{ font-size:clamp(16px,2.2vw,22px); }
+  .fc-sm{ font-size:clamp(12px,1.6vw,16px); }
   .fc-accent{ color:var(--accent-2); }
   .formulitas-photos{
     display:grid;
@@ -681,7 +696,9 @@
   }
   .formulitas-photos img{
     width:100%;
-    height:auto;
+    height:100%;
+    aspect-ratio:5/7;
+    object-fit:cover;
     display:block;
   }
 
@@ -770,7 +787,7 @@
     background:rgba(255,255,255,.02);
   }
   .contact-card h3{
-    font-size:19px;
+    font-size:17px;
     margin-bottom:18px;
   }
   .contact-form{
@@ -847,7 +864,7 @@
     color:var(--ink);
   }
   .newsletter-modal-body h3{
-    font-size:clamp(18px,2.6vw,22px);
+    font-size:clamp(16px,2.4vw,20px);
     line-height:1.15;
     color:var(--ink);
   }
@@ -948,11 +965,11 @@
   <header>
     <div class="wrap nav">
       <a class="brand" href="#top">
-        <span class="brand-mark"><img src="img/logo-mark.png?v=4" alt="La Fórmula"></span>
+        <span class="brand-mark"><img src="img/logo-mark.png?v=5" alt="La Fórmula"></span>
         <span>La Fórmula</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#eventos">Tickets</a></li>
         <li><a href="#sobre-nosotros">Sobre nosotros</a></li>
         <li><a href="#galeria">Galería</a></li>
         <li><a href="#contacto">Contacto</a></li>
@@ -979,7 +996,7 @@
       <img src="img/hero-photo.png" alt="Pista de La Fórmula a pleno, con el cartel de neón de la marca sobre el DJ booth">
     </div>
     <div class="wrap hero-content">
-      <img class="hero-logo" src="img/logo-mark.png?v=4" alt="La Fórmula">
+      <img class="hero-logo" src="img/logo-mark.png?v=5" alt="La Fórmula">
       <span class="label eyebrow">Reggaetón · Buenos Aires</span>
       <div class="cta-row">
         <a class="btn btn-primary" href="https://www.passline.com/eventos/la-formula-x-hache-club-199/la-formula-847264" target="_blank" rel="noopener">Conseguí tu entrada</a>
@@ -991,7 +1008,7 @@
   <section id="eventos">
     <div class="wrap">
       <div class="section-head">
-        <span class="label">Eventos</span>
+        <span class="label">Tickets</span>
         <h2>Próximos eventos</h2>
         <p>Una fecha por vez, siempre confirmada primero por Instagram.</p>
       </div>
@@ -1014,14 +1031,14 @@
           </div>
         </div>
         <div class="ticket-stub">
-          <img class="ticket-stub-logo" src="img/logo-mark.png?v=4" alt="La Fórmula">
+          <img class="ticket-stub-logo" src="img/logo-mark.png?v=5" alt="La Fórmula">
           <span class="m mono">19 SEP · VIE</span>
           <div class="ticket-barcode" aria-hidden="true"></div>
         </div>
       </a>
       <a class="ticket ticket-soon" href="https://www.instagram.com/la.formula.oficial/" target="_blank" rel="noopener">
         <div class="ticket-logo-panel">
-          <span class="ticket-soon-mark">?</span>
+          <img class="ticket-venue-logo" src="img/cruza-logo.jpg" alt="Cruza Recoleta">
         </div>
         <div class="ticket-main">
           <div class="ticket-main-text">
@@ -1036,7 +1053,7 @@
           </div>
         </div>
         <div class="ticket-stub">
-          <img class="ticket-stub-logo" src="img/logo-mark.png?v=4" alt="La Fórmula">
+          <img class="ticket-stub-logo" src="img/logo-mark.png?v=5" alt="La Fórmula">
           <span class="m mono">PRONTO</span>
           <div class="ticket-barcode" aria-hidden="true"></div>
         </div>
@@ -1219,7 +1236,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <a class="brand" href="#top">
-        <span class="brand-mark"><img src="img/logo-mark.png?v=4" alt="La Fórmula"></span>
+        <span class="brand-mark"><img src="img/logo-mark.png?v=5" alt="La Fórmula"></span>
         <span>La Fórmula</span>
       </a>
       <ul class="foot-links">
@@ -1227,7 +1244,7 @@
         <li><a href="https://open.spotify.com/playlist/4HknHQyTJ9J1VlRIwllGCG?si=XEzO6uyETr2Ck8Ek3t4eIA" target="_blank" rel="noopener">Spotify</a></li>
         <li><a href="https://www.tiktok.com/@laformula_okk" target="_blank" rel="noopener">TikTok</a></li>
         <li><a href="https://www.passline.com/eventos/la-formula-x-hache-club-199/la-formula-847264" target="_blank" rel="noopener">Entradas</a></li>
-        <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#eventos">Tickets</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </div>
